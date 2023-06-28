@@ -1,4 +1,16 @@
 @charset "UTF-8";
+h3{
+    text-align: center;
+}
+.select_img{
+    text-align: center;
+ }
+
+ #selectedImage{
+    border: 2px solid black; /* フレームの境界線のスタイル */
+    padding: 5px; /* フレーム内の余白 */
+    display: inline-block; /* フレームをインライン要素として配置 */
+ }
 
 .btn01{
     position: absolute;
@@ -48,12 +60,3 @@ label{
     line-height:2em;
     font-size:20px;
   }
-
-/*
-body {
-    background-image: url("背景01.png");
-    background-repeat: no-repeat;
-    background-position: 50%  50%;
-    background-size: cover;
-  }
-  */
