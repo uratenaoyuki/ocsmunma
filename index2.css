@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.audio_button {
+    text-align: center;
+}
+
+#image-container {
+    display: none;
+  }
