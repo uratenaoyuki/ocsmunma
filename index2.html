@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index2.css" type="text/css">
+</head>
+
+<body>
+    <div style="border: rgb(255, 0, 0) solid 1px; font-size: 100%; padding: 20px;">
+      <h1>ONE PIECE BGM設定</h1>
+
+      <style>
+        h1 {
+          text-align: center;
+        }  
+      </style>
+
+      <audio src="../audio/解放のドラム.mp3" type="audio/mpeg"></audio>
+
+      <div class="audio_button">
+        <button id="btn_play">再生</button>
+        &nbsp;
+        <button id="btn_pause">一時停止</button>
+        &nbsp;
+        <button id="btn_reset">リセット</button>
+      </div>  
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function(){
+
+        const btn_play = document.getElementById("btn_play");
+        const btn_pause = document.getElementById("btn_pause");
+        const btn_reset = document.getElementById("btn_reset");
+        const audioElement = document.querySelector("audio");
+      
+        btn_play.addEventListener("click", e => {
+          audioElement.play();
+        });
+      
+        btn_pause.addEventListener("click", e => {
+          audioElement.pause();
+        });
+
+        btn_reset.addEventListener("click", e => {
+        audioElement.currentTime = 0;
+        audioElement.pause();
+        });
+
+      });  
+    </script>
+
+</body>
+</html>
