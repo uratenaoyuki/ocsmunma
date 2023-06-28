@@ -9,27 +9,166 @@
 </head>
 
 <body>
-    <div style="border: rgb(255, 0, 0) solid 1px; font-size: 100%; padding: 20px;">
+    <div style="border: rgb(255, 0, 0) solid 2px; font-size: 100%; padding: 20px;">
       <h1>ONE PIECE BGM設定</h1>
-
+      <img class="img_uta" src="../img/ウタの実.png" alt="ウタウタの実" >
+      <br>
       <style>
         h1 {
           text-align: center;
         }  
       </style>
 
+      <!-- 前園先生に「戻る」クリックして、画面移行してもbgmが鳴り続ける方法を聞く-->
       <audio src="../audio/解放のドラム.mp3" type="audio/mpeg"></audio>
 
       <div class="audio_button">
+        
         <button id="btn_play">再生</button>
         &nbsp;
         <button id="btn_pause">一時停止</button>
         &nbsp;
         <button id="btn_reset">リセット</button>
+        
       </div>  
     </div>
+    <br>
+    <br>
+    <div style="border: rgb(255, 0, 0) solid 2px; font-size: 100%; padding: 20px;">
+      
+      <div class="select_char">
+        <h1>推しキャラ選択</h2>
+        <div class="select_char_1">
+          <input type="radio" name="image" value="../img/ルフィ.gif">ルフィ
+          <input type="radio" name="image" value="../img/ゾロ.gif">ゾロ
+          <input type="radio" name="image" value="../img/ナミ.gif">ナミ
+          <input type="radio" name="image" value="../img/ウソップ.gif">ウソップ
+          <input type="radio" name="image" value="../img/サンジ.gif">サンジ<br>
+        </div>  
+        <div class="select_char_2">
+          <input type="radio" name="image" value="../img/チョッパー.gif">チョッパー
+          <input type="radio" name="image" value="../img/ロビン.gif">ロビン
+          <input type="radio" name="image" value="../img/フランキー.gif">フランキー
+          <input type="radio" name="image" value="../img/ブルック.gif">ブルック
+        </div>
+        <br>  
+        <input type="radio" name="image" value="" checked>選択しない
+        <br>
+      </div>
+      <br>
+      <div class="select_img">
+        <img id="selectedImage" src="" alt="選択された画像">
+      </div> 
+     
+    </div>
+    
+    <br><br>
+    <div class="select_bgd">
+      <div style="border: rgb(255, 0, 0) solid 2px; font-size: 100%; padding: 20px;">
+      <h1>背景色の選択</h1>
+        <div class="container">
+          <input type="radio" name="color" value="rgb(255, 200, 200)" onchange="changeBackgroundColor(this.value)">
+          <span class="color-sample" style="background-color: rgb(255, 200, 200);"></span>
+          <label for="light-red">薄い赤</label>
+        </div>
+        
+        <div class="container">
+          <input type="radio" name="color" value="rgb(200, 200, 255)" onchange="changeBackgroundColor(this.value)">
+          <span class="color-sample" style="background-color: rgb(200, 200, 255);"></span>
+          <label for="light-blue">薄い青</label>
+        </div>
 
+        <div class="container">
+          <input type="radio" name="color" value="rgb(200, 255, 200)" onchange="changeBackgroundColor(this.value)">
+          <span class="color-sample" style="background-color: rgb(200, 255, 200);"></span>
+          <label for="light-green">薄い緑</label>
+        </div>
+
+        <div class="container1">
+          <input type="radio" name="color" value="rgb(255, 255, 200)" onchange="changeBackgroundColor(this.value)">
+          <span class="color-sample" style="background-color: rgb(255, 255, 200);"></span>
+          <label for="light-yellow">薄い黄色</label>
+        </div>
+
+        <div class="container2">
+          <input type="radio" name="color" value="rgb(255, 220, 150)" onchange="changeBackgroundColor(this.value)">
+          <span class="color-sample" style="background-color: rgb(255, 220, 150);"></span>
+          <label for="light-orange">薄いオレンジ</label>
+        </div>
+
+        <div class="container">
+          <input type="radio" name="color" value="rgb(220, 200, 255)" onchange="changeBackgroundColor(this.value)">
+          <span class="color-sample" style="background-color: rgb(220, 200, 255);"></span>
+          <label for="light-purple">薄い紫</label>
+        </div>
+        <br>
+        <button onclick="resetBackgroundColor()">背景色をリセット</button>
+      </div>
+    </div>  
+    <br>
+    <div style="text-align: center;">
+      <button onclick="displayImage()">決定</button>
+      &nbsp; &nbsp;
+      <button onclick="goBack()">戻る</button>
+    </div>
+    <br>
     <script>
+    
+    //戻るボタン
+    function goBack() {
+      window.history.back();
+    }
+    
+    //index.htmlの背景色を反映
+    document.addEventListener("DOMContentLoaded", function() {
+      var storedColor = localStorage.getItem('backgroundColor');
+      if (storedColor) {
+        document.body.style.backgroundColor = storedColor;
+      }
+    });
+
+    //index.htmlに背景色を反映
+    function changeBackgroundColor(color) {
+      localStorage.setItem('backgroundColor', color);
+      document.body.style.backgroundColor = color;
+    }
+
+    // 背景色をリセット
+    function resetBackgroundColor() {
+      localStorage.removeItem('backgroundColor');
+      document.body.style.backgroundColor = '';
+    }
+
+    //gif画像(推しキャラ)をindex.htmlに表示
+    function displayImage() {
+      var selectedImage = document.querySelector('input[name="image"]:checked').value;
+      window.location.href = "index.html?image=" + selectedImage;
+    }
+    var radioButtons = document.getElementsByName("image");
+    
+
+    //gif画像(推しキャラ)を選択しなかった場合の処理
+    function displayImage() {
+      var selectedImage = document.querySelector('input[name="image"]:checked');
+      if (selectedImage === null) {
+        alert("推しキャラを選択してください！");
+        return;
+      }
+      var imageSrc = selectedImage.value;
+      window.location.href = "index.html?image=" + imageSrc;
+    }
+
+    //gif画像切り替える
+    function changeImage() {
+      var selectedImage = document.getElementById("selectedImage");
+      var imageSrc = this.value;
+      selectedImage.src = imageSrc;
+    }
+    for (var i = 0; i < radioButtons.length; i++) {
+      radioButtons[i].addEventListener("change", changeImage);
+    } 
+
+    //BGMに関するjavascript
         window.addEventListener('DOMContentLoaded', function(){
 
         const btn_play = document.getElementById("btn_play");
@@ -53,5 +192,5 @@
       });  
     </script>
 
+
 </body>
-</html>
