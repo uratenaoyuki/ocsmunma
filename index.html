@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css" type="text/css">
+</head>
+
+<body>
+
+    <h1>診断ツール</h1>
+    <style>
+        h1 {
+			text-align: center;
+        }
+    </style>
+
+	<div id="start-screen">
+
+        <p><span style="font-size: 1.8em;">
+		
+			<img class="btn01" src="../img/設定アイコン.png" alt="設定" onclick="location.href='index2.html'">
+			
+			大人気テレビアニメ「ワンピース」の作中に「悪魔の実」と呼ばれる、超人的な能力が得られる果実が存在します！<br>
+            いくつかの質問に答えるだけで、あなたにあった悪魔の実がわかるよ！！<br>
+            ぜひ、あなたの診断結果の悪魔の実が作中どんな活躍をするかを、確認してみてください！！
+		  
+		</span></p>
+		    <style>
+                p {
+                  text-align: center;
+                }
+            </style>
+		<button style="display:block; margin: 0 auto;" onclick="startDiagnostic()">診断をスタートする</button>
+       
+	</div>
+    
+	<div id="question1" style="display:none; text-align: center;">
+		<p>もし外出時に天候が悪かったらどうする？</p>
+		<label><input type="radio" id="answer1-A" name="answer1" value="A">
+		構わず外出する</label><br>
+		<label><input type="radio" id="answer1-B" name="answer1" value="B">
+		とりあえず様子を見る</label><br>
+		<label><input type="radio" id="answer1-C" name="answer1" value="C">
+		家に籠る</label><br><br>
+		<button onclick="goToQuestion2()">次へ</button>
+	</div>  
+
+	<div id="question2" style="display:none; text-align: center;">
+		<p>質問2：好きな色は何ですか？</p>
+		<label><input type="radio" id="answer2-red" name="answer2" value="red">
+		赤</label><br>
+		<label><input type="radio" id="answer2-blue" name="answer2" value="blue">
+		青</label><br><br>
+		<nobr>
+			<button onclick="goToResult()">結果を見る</button>
+		    <button onclick="backToQuestion1()">戻る</button>
+	    </nobr>
+		
+    </div>
+
+	<div id="result" style="display:none;">
+		<p id="result-text"></p>
+		<button onclick="startOver()">最初からやり直す</button>
+	</div>
+	
+	<script>
+         function startDiagnostic() {
+            // スタート画面を非表示にし、質問1を表示する
+            document.getElementById("start-screen").style.display = "none";
+            document.getElementById("question1").style.display = "block";
+        }
+
+        function backToStart() {
+            // 質問1と戻るボタンを非表示にし、スタート画面を表示する
+            document.getElementById("start-screen").style.display = "block";
+            document.getElementById("question1").style.display = "none";
+            document.getElementById("result").style.display = "none";
+        }
+
+		function goToQuestion2() {
+			// 質問1の回答を取得
+			var answer1 = document.querySelector('input[name="answer1"]:checked').value;
+			// 質問1の回答をセッションストレージに保存
+			sessionStorage.setItem("answer1", answer1);
+			// 質問1を非表示にして、質問2を表示する
+			document.getElementById("question1").style.display = "none";
+			document.getElementById("question2").style.display = "block";
+		}
+		
+		function goToResult() {
+			// 質問2の回答を取得
+			var answer2 = document.querySelector('input[name="answer2"]:checked').value;
+			// 質問1の回答をセッションストレージから取得
+			var answer1 = sessionStorage.getItem("answer1");
+			// 診断結果を作成
+			var resultText = "あなたは";
+			if (answer1 === "A") {
+				resultText += "ロギア系";
+            } else if (answer1 === "B") {
+				resultText += "パラミシア系";
+			} else {
+			    resultText += "ゾオン系";
+			}
+				
+			
+			resultText += "で、好きな色は";
+			if (answer2 === "red") {
+				resultText += "赤";
+			} else {
+				resultText += "青";
+			}
+			resultText += "です。";
+			// 診断結果を表示
+			document.getElementById("result-text").innerHTML = resultText;
+			// 質問2と戻るボタンを非表示にし、結果を表示する
+			document.getElementById("question2").style.display = "none";
+			document.getElementById("question1").style.display = "none";
+			document.getElementById("result").style.display = "block";
+		}
+		
+		function backToQuestion1() {
+			// 質問1と戻るボタンを表示し、質問2を非表示にする
+			document.getElementById("question1").style.display = "block";
+			document.getElementById("question2").style.display = "none";
+			document.getElementById("result").style.display = "none";
+		}
+		
+		function startOver() {
+			// セッションストレージをクリアして、最初の質問に戻る
+			sessionStorage.clear();
+			backToQuestion1();
+		}
+
+	</script>
+			
+</body>
