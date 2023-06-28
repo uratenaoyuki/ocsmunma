@@ -10,8 +10,21 @@
 
 <body>
 
-    <h1>診断ツール</h1>
+
+    <h1>悪魔の実　性格診断</h1>
     <style>
+        h1 {
+			text-align: center;
+			font-size: 70px;
+        }
+    </style>	
+	
+	<h3>【あなたの推しキャラ】</h3>
+	<div class="select_img">
+		<img id="selectedImage" src="" alt="推しキャラを設定画面で選択してね">
+	</div>
+
+	<style>
         h1 {
 			text-align: center;
         }
@@ -19,36 +32,85 @@
 
 	<div id="start-screen">
 
-        <p><span style="font-size: 1.8em;">
-		
+        <p><span style="font-size: 0.8em;">
+	
 			<img class="btn01" src="../img/設定アイコン.png" alt="設定" onclick="location.href='index2.html'">
 			
-			大人気テレビアニメ「ワンピース」の作中に「悪魔の実」と呼ばれる、超人的な能力が得られる果実が存在します！<br>
+			大人気テレビアニメ「ワンピース」の作中には、「悪魔の実」と呼ばれる、超人的な能力が得られる果実が存在します！<br>
             いくつかの質問に答えるだけで、あなたにあった悪魔の実がわかるよ！！<br>
             ぜひ、あなたの診断結果の悪魔の実が作中どんな活躍をするかを、確認してみてください！！
+			<br>
+			<br>
+			<img class="img01" src="../img/ゴムゴムの実.png" alt="ゴムゴムの実" >
+			<br>
 		  
 		</span></p>
 		    <style>
-                p {
-                  text-align: center;
-                }
+				button{
+    			width: 500px;
+   				height: 150px;
+				font-size: 50px;
+				background-color: red;
+    			color: white;
+  				}
             </style>
 		<button style="display:block; margin: 0 auto;" onclick="startDiagnostic()">診断をスタートする</button>
        
 	</div>
     
 	<div id="question1" style="display:none; text-align: center;">
-		<p>もし外出時に天候が悪かったらどうする？</p>
+		<p>あなたは明日、久しぶりの休日ですがなんの予定もありません。<br>日々の疲労を回復するため、
+		どこかに出掛けようとしています。どこに出掛けますか？<br><br>[ 質問1 ]</p>
 		<label><input type="radio" id="answer1-A" name="answer1" value="A">
-		構わず外出する</label><br>
+		選択肢A：綺麗な景色を見に行く　　　　　　　　　　　　　　</label><br>
 		<label><input type="radio" id="answer1-B" name="answer1" value="B">
-		とりあえず様子を見る</label><br>
+		選択肢B：動物園に行って、たくさんの動物と触れ合う　　　　</label><br>
 		<label><input type="radio" id="answer1-C" name="answer1" value="C">
-		家に籠る</label><br><br>
+		選択肢C：マジックや超能力を見ることができる舞台を見に行く</label><br><br>
+		<style>
+			p {
+			  text-align: center;
+			  font-family: "Times New Roman", Times, serif;
+			  font-size: 40px;
+			}
+			button{
+			width: 500px;
+			   height: 150px;
+			font-size: 50px;
+			background-color: red;
+			color: rgb(252, 248, 9);
+			  }
+		</style>
 		<button onclick="goToQuestion2()">次へ</button>
 	</div>  
 
-	<div id="question2" style="display:none; text-align: center;">
+	<div id="question2.1" style="display:none; text-align: center;">
+		<p>質問2：好きな色は何ですか？</p>
+		<label><input type="radio" id="answer2-red" name="answer2" value="red">
+		赤</label><br>
+		<label><input type="radio" id="answer2-blue" name="answer2" value="blue">
+		青</label><br><br>
+		<nobr>
+			<button onclick="goToResult()">結果を見る</button>
+		    <button onclick="backToQuestion1()">戻る</button>
+	    </nobr>
+		
+    </div>
+
+	<div id="question2.2" style="display:none; text-align: center;">
+		<p>質問2：好きな色は何ですか？</p>
+		<label><input type="radio" id="answer2-red" name="answer2" value="red">
+		赤</label><br>
+		<label><input type="radio" id="answer2-blue" name="answer2" value="blue">
+		青</label><br><br>
+		<nobr>
+			<button onclick="goToResult()">結果を見る</button>
+		    <button onclick="backToQuestion1()">戻る</button>
+	    </nobr>
+		
+    </div>
+
+	<div id="question2.3" style="display:none; text-align: center;">
 		<p>質問2：好きな色は何ですか？</p>
 		<label><input type="radio" id="answer2-red" name="answer2" value="red">
 		赤</label><br>
@@ -67,6 +129,30 @@
 	</div>
 	
 	<script>
+		
+
+		//背景色読み込み
+		document.addEventListener("DOMContentLoaded", function() {
+          var storedColor = localStorage.getItem('backgroundColor');
+          if (storedColor) {
+            document.body.style.backgroundColor = storedColor;
+          }
+        });
+
+		function goBack() {
+            window.history.back();
+        }
+
+        // ページが読み込まれた時に選択された画像を表示する
+		window.onload = function() {
+      	  var queryString = window.location.search;
+      	  var urlParams = new URLSearchParams(queryString);
+      	  var selectedImage = urlParams.get('image');
+      	  var imgElement = document.getElementById("selectedImage");
+      	  imgElement.src = selectedImage;
+		}
+
+
          function startDiagnostic() {
             // スタート画面を非表示にし、質問1を表示する
             document.getElementById("start-screen").style.display = "none";
@@ -87,7 +173,7 @@
 			sessionStorage.setItem("answer1", answer1);
 			// 質問1を非表示にして、質問2を表示する
 			document.getElementById("question1").style.display = "none";
-			document.getElementById("question2").style.display = "block";
+			document.getElementById("question2.1").style.display = "block";
 		}
 		
 		function goToResult() {
@@ -116,7 +202,7 @@
 			// 診断結果を表示
 			document.getElementById("result-text").innerHTML = resultText;
 			// 質問2と戻るボタンを非表示にし、結果を表示する
-			document.getElementById("question2").style.display = "none";
+			document.getElementById("question2.1").style.display = "none";
 			document.getElementById("question1").style.display = "none";
 			document.getElementById("result").style.display = "block";
 		}
@@ -124,7 +210,7 @@
 		function backToQuestion1() {
 			// 質問1と戻るボタンを表示し、質問2を非表示にする
 			document.getElementById("question1").style.display = "block";
-			document.getElementById("question2").style.display = "none";
+			document.getElementById("question2.1").style.display = "none";
 			document.getElementById("result").style.display = "none";
 		}
 		
